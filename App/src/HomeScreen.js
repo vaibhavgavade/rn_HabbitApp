@@ -19,7 +19,15 @@ import * as progress from 'react-native-progress';
 import {connect} from 'react-redux';
 
 const HomeScreeen = ({navigation, data}) => {
-  const [state, stateChange] = useState(new Date());
+  const [Colors, changeColors] = useState([
+    '#006400',
+    '#6495ed',
+    '#9932cc',
+    '#008000',
+    '#ff0000',
+    '#0000cd',
+  ]);
+
   const {textStyle, imgStyle, flatListTextStyle} = Container;
   return (
     <View>
@@ -34,7 +42,8 @@ const HomeScreeen = ({navigation, data}) => {
           </Text>
         </View>
         <View style={{flex: 1}}>
-          <TouchableOpacity onPress={() => navigation.navigate('update')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('update', {id: data[0]})}>
             <Image style={imgStyle} source={Images.AddCircle} />
           </TouchableOpacity>
         </View>
@@ -44,17 +53,18 @@ const HomeScreeen = ({navigation, data}) => {
         horizontal={true}
         keyExtractor={item => item.id}
         showsHorizontalScrollIndicator={false}
-        data={arr}
+        data={data}
         renderItem={({item}) => (
           <Card>
-            <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Detail', {mydata: item[1],myDataOne:item[2]})}>
               <View style={{padding: 10}}>
                 <Text style={{fontFamily: Font.boldSans, fontSize: 20}}>
-                  {item.title}
+                  {item[0]}
                 </Text>
                 <Text
                   style={[flatListTextStyle, {fontFamily: Font.regularSans}]}>
-                  {item.type}
+                  {item[1]}
                 </Text>
                 <Text style={{fontFamily: Font.regularSans, fontSize: 18}}>
                   {item.typeName}
@@ -86,11 +96,28 @@ const HomeScreeen = ({navigation, data}) => {
         borderHighlightColor={'#0000ff'}
         iconContainer={{flex: 0.1}}
       />
-
-      <Text style={{margin: 10, fontSize: 20, fontFamily: Font.boldSans}}>
-        Your Habbits
-      </Text>
-
+      <View style={{fle1: 1, flexDirection: 'row'}}>
+        <Text style={{margin: 10, fontSize: 20, fontFamily: Font.boldSans}}>
+          Your Habbits
+        </Text>
+        <View
+          style={{
+            backgroundColor: '#008b8b',
+            height: 25,
+            width: 25,
+            borderRadius: 15,
+            marginTop: 12,
+          }}>
+          <Text
+            style={{
+              color: '#000000',
+              alignSelf: 'center',
+              paddingTop: 5,
+            }}>
+            {data.length}
+          </Text>
+        </View>
+      </View>
       <FlatList
         data={data}
         renderItem={({item}) => (
@@ -102,13 +129,15 @@ const HomeScreeen = ({navigation, data}) => {
               marginRight: 10,
               borderRadius: 10,
               height: 80,
+              borderBottomLeftRadius: 100,
+              borderTopLeftRadius: 100,
             }}>
             <Text
               style={{
                 marginTop: 5,
                 fontFamily: Font.regularSans,
                 fontSize: 20,
-                marginLeft: 10,
+                marginLeft: 20,
               }}>
               {item[0]}
             </Text>
@@ -116,16 +145,16 @@ const HomeScreeen = ({navigation, data}) => {
               style={{
                 marginTop: 5,
                 fontFamily: Font.regularSans,
-                marginLeft: 10,
+                marginLeft: 20,
               }}>
               {item[1]}
             </Text>
 
             <progress.Bar
               progress={item[2]}
-              width={350}
-              style={{marginLeft: 10, marginTop: 5}}
-              color="red"
+              width={300}
+              style={{marginLeft: 20, marginTop: 5}}
+              color={Colors[Math.floor(Math.random() * Colors.length)]}
             />
           </View>
         )}

@@ -7,7 +7,7 @@ import Font from '../assets/Font';
 const UpdateData = ({ActionData}) => {
   const [data, ChangeData] = useState('');
   const [Idata, changeIdata] = useState('');
-  const [progessData, changeProgress] = useState('');
+  const [progessData, changeProgress] = useState();
   const [update, updateData] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,17 @@ const UpdateData = ({ActionData}) => {
   };
 
   const updateProgrss = text => {
-    changeProgress(text);
+    let newText = '';
+    let numbers = '0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9';
+
+    for (var i = 0; i < text.length; i++) {
+      if (numbers.indexOf(text[i]) > -1) {
+        newText = newText + text[i];
+      } else {
+        alert('please enter numbers only');
+      }
+    }
+    changeProgress(newText);
   };
   const updateViewData = () => {
     console.log('Test Update', update);
@@ -58,6 +68,8 @@ const UpdateData = ({ActionData}) => {
         placeholder="Your Progress"
         multiline={true}
         keyboardType={'numeric'}
+        maxLength={9}
+        returnKeyType="go"
       />
       <TouchableOpacity
         style={{

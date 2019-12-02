@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image,} from 'react-native';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import {Images} from '../Constant/Images';
 import Font from '../assets/Font';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -7,10 +7,16 @@ import * as Progress from 'react-native-progress';
 import EveryDay from '../Component/EveryDay';
 import LineChart from '../Component/LineChart';
 import Rsb from '../Component/Rsb';
+import {connect} from 'react-redux';
 
-
-const DetailScreen = () => {
+const DetailScreen = ({data, navigation}) => {
   const {viewStyle} = Container;
+  const navData = navigation.getParam('mydata');
+  const navDataOne = navigation.getParam('myDataOne');
+
+  const navPercet = navDataOne * 100;
+
+  console.log("vaibhav's data", navData);
 
   return (
     <View style={viewStyle}>
@@ -33,22 +39,26 @@ const DetailScreen = () => {
 
       <View style={{margin: 20}}>
         <Text style={{fontFamily: Font.regularSans, fontSize: 20}}>
-          Five from this week
+          {navData}
         </Text>
         <Progress.Bar
-          style={{marginTop: 10, width: 300}}
-          progress={0.9}
+          style={{marginTop: 10}}
+          progress={navDataOne}
           color="#c71585"
+          width={300}
         />
       </View>
       <View style={{margin: 20}}>
         <Text style={{fontSize: 20}}>strength</Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={{fontSize: 40, fontFamily: Font.boldSans}}>73%</Text>
+          <Text style={{fontSize: 40, fontFamily: Font.boldSans}}>
+            {navPercet}%
+          </Text>
           <Progress.Circle
             size={50}
-            progress={0.6}
+            progress={navDataOne}
             showsText={true}
+            formatText={() => `${navPercet}%`}
             strokeCap={'butt'}
           />
         </View>
@@ -67,8 +77,12 @@ const DetailScreen = () => {
     </View>
   );
 };
+const mapStateToProps = ({reduc1}) => {
+  const {data} = reduc1;
+  return {data};
+};
 
-export default DetailScreen;
+export default connect(mapStateToProps)(DetailScreen);
 
 const Container = StyleSheet.create({
   viewStyle: {

@@ -12,7 +12,7 @@ const Container = StyleSheet.create({
     marginEnd: 20,
     marginLeft: 10,
     marginTop: 20,
-    height: 120,
-    width: 100,
+    height: 150,
+    width: 150,
   },
 });
