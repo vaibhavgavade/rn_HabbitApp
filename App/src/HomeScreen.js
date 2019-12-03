@@ -8,17 +8,18 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 import Card from '../Component/Card';
 import Font from '../assets/Font';
 import {Images} from '../Constant/Images';
-import Update from '../Component/Update';
-import {arr} from '../Constant/Arr';
 import CalendarStrip from 'react-native-calendar-strip';
 import * as progress from 'react-native-progress';
 import {connect} from 'react-redux';
+import {CheckBox} from '../Component/CheckBox';
+import {LoadLoader} from '../Redux/action/ActionData';
 
-const HomeScreeen = ({navigation, data}) => {
+const HomeScreeen = ({LoadLoader, navigation, data}) => {
   const [Colors, changeColors] = useState([
     '#006400',
     '#6495ed',
@@ -27,6 +28,11 @@ const HomeScreeen = ({navigation, data}) => {
     '#ff0000',
     '#0000cd',
   ]);
+  const [Cheks, changeChecks] = useState(false);
+  const changeButton = data => {
+    changeChecks(!data);
+    LoadLoader(Cheks);
+  };
 
   const {textStyle, imgStyle, flatListTextStyle} = Container;
   return (
@@ -57,7 +63,12 @@ const HomeScreeen = ({navigation, data}) => {
         renderItem={({item}) => (
           <Card>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Detail', {mydata: item[1],myDataOne:item[2]})}>
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  mydata: item[1],
+                  myDataOne: item[2],
+                })
+              }>
               <View style={{padding: 10}}>
                 <Text style={{fontFamily: Font.boldSans, fontSize: 20}}>
                   {item[0]}
@@ -74,6 +85,7 @@ const HomeScreeen = ({navigation, data}) => {
           </Card>
         )}
       />
+
       <CalendarStrip
         calendarAnimation={{type: 'sequence', duration: 30}}
         selection={'border'}
@@ -120,7 +132,8 @@ const HomeScreeen = ({navigation, data}) => {
       </View>
       <FlatList
         data={data}
-        renderItem={({item}) => (
+        extraData={Cheks}
+        renderItem={({item, index}) => (
           <View
             style={{
               backgroundColor: '#6a5acd',
@@ -132,30 +145,44 @@ const HomeScreeen = ({navigation, data}) => {
               borderBottomLeftRadius: 100,
               borderTopLeftRadius: 100,
             }}>
-            <Text
+            <View
               style={{
-                marginTop: 5,
-                fontFamily: Font.regularSans,
-                fontSize: 20,
-                marginLeft: 20,
+                flexDirection: 'row',
+                flex: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: 10,
               }}>
-              {item[0]}
-            </Text>
-            <Text
-              style={{
-                marginTop: 5,
-                fontFamily: Font.regularSans,
-                marginLeft: 20,
-              }}>
-              {item[1]}
-            </Text>
+              <TouchableOpacity onPress={() => changeButton(Cheks)}>
+                <CheckBox isChecked={Cheks} />
+              </TouchableOpacity>
+              <View style={{flex: 3}}>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontFamily: Font.regularSans,
+                    fontSize: 20,
+                    marginLeft: 20,
+                  }}>
+                  {item[0]}
+                </Text>
+                <Text
+                  style={{
+                    marginTop: 5,
+                    fontFamily: Font.regularSans,
+                    marginLeft: 20,
+                  }}>
+                  {item[1]}
+                </Text>
 
-            <progress.Bar
-              progress={item[2]}
-              width={300}
-              style={{marginLeft: 20, marginTop: 5}}
-              color={Colors[Math.floor(Math.random() * Colors.length)]}
-            />
+                <progress.Bar
+                  progress={item[2]}
+                  width={300}
+                  style={{marginLeft: 20, marginTop: 5}}
+                  color={Colors[Math.floor(Math.random() * Colors.length)]}
+                />
+              </View>
+            </View>
           </View>
         )}
       />
@@ -164,11 +191,12 @@ const HomeScreeen = ({navigation, data}) => {
 };
 
 const mapStateToProps = ({reduc1}) => {
+  console.log('Test Props', reduc1);
   const {data} = reduc1;
   return {data};
 };
 
-export default connect(mapStateToProps)(HomeScreeen);
+export default connect(mapStateToProps, {LoadLoader})(HomeScreeen);
 
 const Container = StyleSheet.create({
   viewStyle: {
