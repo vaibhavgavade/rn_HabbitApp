@@ -13,6 +13,8 @@ const DetailScreen = ({data, navigation}) => {
   const {viewStyle} = Container;
   const navData = navigation.getParam('mydata');
   const navDataOne = navigation.getParam('myDataOne');
+  const dateAllaData = navigation.getParam('datedate');
+  console.log('test date navigation parameter', dateAllaData);
 
   const navPercet = navDataOne * 100;
 

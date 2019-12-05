@@ -18,6 +18,7 @@ import * as progress from 'react-native-progress';
 import {connect} from 'react-redux';
 import {CheckBox} from '../Component/CheckBox';
 import {LoadLoader} from '../Redux/action/ActionData';
+import {duration} from 'moment';
 
 const HomeScreeen = ({LoadLoader, navigation, data}) => {
   const [Colors, changeColors] = useState([
@@ -29,7 +30,7 @@ const HomeScreeen = ({LoadLoader, navigation, data}) => {
     '#0000cd',
   ]);
   const [Cheks, changeChecks] = useState(false);
-  const changeButton = data => {
+  const changeButton = (data, index) => {
     changeChecks(!data);
     LoadLoader(Cheks);
   };
@@ -87,9 +88,9 @@ const HomeScreeen = ({LoadLoader, navigation, data}) => {
       />
 
       <CalendarStrip
-        calendarAnimation={{type: 'sequence', duration: 30}}
+        calendarAnimation={{type: 'sequence', duration: 300}}
         selection={'border'}
-        selectionAnimation={{duration: 300, borderWidth: 1}}
+        // selectionAnimation={{duration: 300, borderWidth: 1}}
         style={{
           height: 70,
           marginLeft: 5,
@@ -100,13 +101,10 @@ const HomeScreeen = ({LoadLoader, navigation, data}) => {
         }}
         calendarHeaderStyle={{color: 'white'}}
         calendarColor={'#c71585'}
-        highlightColor={'#9265DC'}
         dateNumberStyle={{color: '#000000'}}
         dateNameStyle={{color: '#000000'}}
         highlightDateNumberStyle={{color: '#008000'}}
         highlightDateNameStyle={{color: '#008000'}}
-        borderHighlightColor={'#0000ff'}
-        iconContainer={{flex: 0.1}}
       />
       <View style={{fle1: 1, flexDirection: 'row'}}>
         <Text style={{margin: 10, fontSize: 20, fontFamily: Font.boldSans}}>
@@ -153,9 +151,13 @@ const HomeScreeen = ({LoadLoader, navigation, data}) => {
                 alignItems: 'center',
                 marginLeft: 10,
               }}>
-              <TouchableOpacity onPress={() => changeButton(Cheks)}>
+              <TouchableOpacity
+                onPress={() => {
+                  changeButton(Cheks, index);
+                }}>
                 <CheckBox isChecked={Cheks} />
               </TouchableOpacity>
+
               <View style={{flex: 3}}>
                 <Text
                   style={{

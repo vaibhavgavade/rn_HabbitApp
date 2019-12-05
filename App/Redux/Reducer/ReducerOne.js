@@ -1,11 +1,10 @@
 import {CARD_CREATED} from '../action/ActionType';
 import {Loader_Load} from '../action/ActionType';
+import {GRAPH_DATALOAD} from '../action/ActionType';
 const INITIAL_STATE = {
   data: [],
-  loading: {},
 };
 export const ReducerOne = (state = INITIAL_STATE, action) => {
-  console.log('Test', action.type);
   switch (action.type) {
     case CARD_CREATED: {
       return {
@@ -18,6 +17,7 @@ export const ReducerOne = (state = INITIAL_STATE, action) => {
         loading: action.payload,
       };
     }
+
     default: {
       return state;
     }

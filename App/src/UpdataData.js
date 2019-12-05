@@ -8,6 +8,7 @@ const UpdateData = ({ActionData}) => {
   const [data, ChangeData] = useState('');
   const [Idata, changeIdata] = useState('');
   const [progessData, changeProgress] = useState();
+  // const [isSelect, changeisSelect] = useState(true);
   const [update, updateData] = useState([]);
 
   useEffect(() => {

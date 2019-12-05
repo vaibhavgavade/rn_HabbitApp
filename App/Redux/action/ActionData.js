@@ -1,5 +1,6 @@
 import {CARD_CREATED} from '../action/ActionType';
 import {Loader_Load} from '../action/ActionType';
+import {GRAPH_DATALOAD} from '../action/ActionType';
 export const ActionData = Data => {
   console.log('Action', Data);
   console.log('Test Action All Data is', Data);
@@ -14,3 +15,10 @@ export const LoadLoader = loader => {
     payload: loader,
   };
 };
+
+export const graphData=graphD=>{
+  return{
+    type:GRAPH_DATALOAD,
+    payload:graphD
+  }
+}

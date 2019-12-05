@@ -1,11 +1,14 @@
 import React from 'react';
 import AppStack from './Route';
 import {Provider} from 'react-redux';
-import {store} from './App/Redux/Store/StoreData';
+import {PersistGate} from 'redux-persist/es/integration/react';
+import {Store, persistor} from './App/Redux/Store/StoreData';
 const App = () => {
   return (
-    <Provider store={store}>
-      <AppStack />
+    <Provider store={Store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AppStack />
+      </PersistGate>
     </Provider>
   );
 };

@@ -1,8 +1,9 @@
 export const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  labels: ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'sat'],
   datasets: [
     {
-      data: [20, 45, 28, 80, 99, 43],
+      data: [1, 2, 3, 4, 5, 6, 7],
+
       color: (opacity = 2) => `rgba(255, 0, 0, ${opacity})`, // for changing graph color
       strokeWidth: 0.5, // optional
     },
@@ -15,6 +16,3 @@ export const chartConfigue = {
   backgroundGradientTo: '#000080', //Defines the second color in the linear gradient of a chart
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, //changing text color
 };
-
-
-

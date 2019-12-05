@@ -23,8 +23,6 @@ const LinChart = () => {
         chartConfig={chartConfigue}
         style={chartStyle}
         bezier
-        yAxisLabel={'V'}
-        yAxisSuffix={'G'}
       />
     </View>
   );
